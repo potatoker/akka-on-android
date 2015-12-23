@@ -1,0 +1,125 @@
+-dontoptimize
+-dontobfuscate
+-dontpreverify
+-dontwarn scala.**
+-ignorewarnings
+
+# temporary workaround; see Scala issue SI-5397
+-keep class scala.collection.SeqLike {
+    public protected *;
+}
+
+-keep class com.typesafe.**
+-keep class akka.**
+-keep class scala.collection.immutable.StringLike {
+    *;
+}
+
+
+#akka
+
+-keepclasseswithmembers class * {
+    public <init>(com.typesafe.config.Config, akka.event.LoggingAdapter, java.util.concurrent.ThreadFactory);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(com.typesafe.config.Config, akka.event.EventStream);
+}
+
+-keep class akka.remote.transport.ProtocolStateActor{
+  *;
+}
+
+#public <init>(akka.actor.OneForOneStrategy, class akka.actor.LocalActorRef);
+-keep class akka.actor.LocalActorRefProvider$SystemGuardian {
+  *;
+}
+
+-keep class akka.actor.LocalActorRefProvider$Guardian{
+  *;
+}
+
+-keep class akka.remote.RemoteActorRefProvider$RemotingTerminator{
+  *;
+}
+
+-keep class akka.remote.EndpointManager{
+  *;
+}
+
+
+-keep class akka.remote.transport.AkkaProtocolManager{
+  *;
+}
+
+-keep class akka.remote.RemoteWatcher{
+  *;
+}
+
+-keep class akka.remote.transport.netty.NettyTransport {
+  public <init>(akka.actor.ExtendedActorSystem, com.typesafe.config.Config);
+}
+
+-keep class akka.remote.ReliableDeliverySupervisor {
+  *;
+}
+
+-keep class akka.remote.EndpointWriter {
+  *;
+}
+
+
+
+
+
+-keepclassmembernames class * implements akka.actor.Actor {
+  akka.actor.ActorContext context;
+  akka.actor.ActorRef self;
+}
+-keep class * implements akka.actor.ActorRefProvider {
+  public <init>(...);
+}
+-keep class * implements akka.actor.ExtensionId {
+  public <init>(...);
+}
+-keep class * implements akka.actor.ExtensionIdProvider {
+  public <init>(...);
+}
+-keep class akka.actor.SerializedActorRef {
+  *;
+}
+-keep class * implements akka.actor.SupervisorStrategyConfigurator {
+  public <init>(...);
+}
+-keep class * extends akka.dispatch.ExecutorServiceConfigurator {
+  public <init>(...);
+}
+-keep class * implements akka.dispatch.MailboxType {
+  public <init>(...);
+}
+-keep class * extends akka.dispatch.MessageDispatcherConfigurator {
+  public <init>(...);
+}
+-keep class akka.event.Logging*
+-keep class akka.event.Logging$LogExt {
+  public <init>(...);
+}
+-keep class akka.remote.DaemonMsgCreate {
+  *;
+}
+-keep class * extends akka.remote.RemoteTransport {
+  public <init>(...);
+}
+-keep class * implements akka.routing.RouterConfig {
+  public <init>(...);
+}
+-keep class * implements akka.serialization.Serializer {
+  public <init>(...);
+}
+
+
+#-dontwarn akka.remote.netty.NettySSLSupport**
+#-dontnote akka.**
+
+# this can be omitted if current Android Build target is android-16
+-dontwarn org.scaloid.** 
